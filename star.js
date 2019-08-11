@@ -16,6 +16,9 @@ var ctx = null
 
 var stars = []
 
+var lasttime = 0
+var deltatime = 0
+
 class Star {
   constructor (sx, x, y) {
     this.sx = sx
@@ -42,6 +45,7 @@ window.onload = function () {
   drawBg()
   drawGirl()
   drawStar()
+  lasttime = new Date() - 0
   animation()
 }
 
@@ -66,8 +70,8 @@ function update () {
     if (star.sx > 6) {
       star.sx = 0
     }
-    star.y = star.y + 2 * Math.random()
-    star.x = star.x + 3 * Math.random() - 1.5
+    // star.y = star.y + 2 * Math.random()
+    // star.x = star.x + 3 * Math.random() - 1.5
     // console.log(star.sx)
     ctx.drawImage(starPic, star.sx * 7, 0, 7, 7, star.x, star.y, 7, 7)
   })
@@ -75,13 +79,16 @@ function update () {
 
 function animation () {
   window.requestAnimationFrame(animation)
-  // update()
-  ctx.clearRect(0, 0, WIDTH, HEIGHT)
-  drawBg()
-  drawGirl()
-  drawStar()
-  update()
-  
+  let now = new Date() - 0
+  if (now - lasttime > 50) {
+    // update()
+    ctx.clearRect(0, 0, WIDTH, HEIGHT)
+    drawBg()
+    drawGirl()
+    drawStar()
+    update()
+    lasttime = now
+  }
   // setInterval(() => {
   //   ctx.clearRect(0, 0, WIDTH, HEIGHT)
   //   drawBg()
